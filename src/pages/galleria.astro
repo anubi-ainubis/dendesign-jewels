@@ -1,0 +1,151 @@
+---
+const images = import.meta.glob('/public/galleria/*', { eager: true });
+const imageList = Object.keys(images).map(path => path.replace('/public', ''));
+---
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galleria — Den Design Jewels</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Raleway:wght@300;400;500&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Raleway', sans-serif; background: #ffffff; color: #4a4440; }
+
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 4rem; background: #ffffff;
+      border-bottom: 1px solid #ece7e2; position: sticky; top: 0; z-index: 100;
+    }
+    .logo-wrap { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
+    .logo-circle {
+      width: 48px; height: 48px; background: #c8bdb0; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+    }
+    .logo-den { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: #fff; letter-spacing: 0.05em; line-height: 1; }
+    .logo-dot { width: 5px; height: 5px; background: #9b8bb4; border-radius: 50%; margin: 1px auto; }
+    .logo-design { font-family: 'Raleway', sans-serif; font-size: 0.45rem; color: #fff; letter-spacing: 0.15em; }
+    .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: #4a4440; font-weight: 400; letter-spacing: 0.1em; }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; }
+    nav a { text-decoration: none; color: #8a7d72; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; }
+    nav a:hover { color: #9b8bb4; }
+
+    .page-header { text-align: center; padding: 3rem 2rem 2rem; }
+    .page-header h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: #4a4440; margin-bottom: 0.5rem; }
+    .page-header p { font-size: 0.8rem; color: #8a7d72; letter-spacing: 0.15em; text-transform: uppercase; }
+    .divider { width: 40px; height: 1px; background: #9b8bb4; margin: 1rem auto; }
+
+    .grid {
+      columns: 3;
+      column-gap: 1rem;
+      max-width: 1200px;
+      margin: 2rem auto 4rem;
+      padding: 0 2rem;
+    }
+
+    .grid-item {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .grid-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.4s ease, opacity 0.3s;
+    }
+
+    .grid-item:hover img {
+      transform: scale(1.03);
+      opacity: 0.9;
+    }
+
+    /* LIGHTBOX */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 2px; }
+    .lightbox-close {
+      position: absolute; top: 2rem; right: 2rem;
+      color: #fff; font-size: 2rem; cursor: pointer;
+      background: none; border: none; line-height: 1;
+    }
+
+    footer {
+      background: #c8bdb0; padding: 3rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: #fff; letter-spacing: 0.1em; }
+    .footer-text { font-size: 0.75rem; color: rgba(255,255,255,0.7); letter-spacing: 0.1em; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="logo-wrap">
+      <div class="logo-circle">
+        <span class="logo-den">DEN</span>
+        <div class="logo-dot"></div>
+        <span class="logo-design">design</span>
+      </div>
+      <span class="logo-text">Handmade Jewels</span>
+    </a>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/collezioni">Collezioni</a></li>
+      <li><a href="/galleria">Galleria</a></li>
+      <li><a href="/chi-sono">Chi sono</a></li>
+      <li><a href="/contatti">Contatti</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-header">
+    <h1>Galleria</h1>
+    <div class="divider"></div>
+    <p>Una selezione di pezzi unici</p>
+  </div>
+
+  <div class="grid">
+    {imageList.map(src => (
+      <div class="grid-item" onclick={`openLightbox('${src}')`}>
+        <img src={src} alt="Den Design Jewels" loading="lazy" />
+      </div>
+    ))}
+  </div>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
+  <footer>
+    <div>
+      <div class="footer-logo">Den Design</div>
+      <div class="footer-text">Handmade Jewels</div>
+    </div>
+    <div class="footer-text">Fatto con cura · Svizzera</div>
+  </footer>
+
+  <script>
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('active');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+  </script>
+
+</body>
+</html>

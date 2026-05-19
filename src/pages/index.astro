@@ -1,11 +1,396 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Den Design Jewels — Handmade Jewels</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Raleway:wght@300;400;500&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --greige: #c8bdb0;
+      --greige-light: #f0ebe5;
+      --greige-dark: #8a7d72;
+      --lilla: #9b8bb4;
+      --white: #ffffff;
+      --text: #4a4440;
+      --text-light: #8a7d72;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: var(--white);
+      color: var(--text);
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background: var(--white);
+      border-bottom: 1px solid #ece7e2;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      text-decoration: none;
+    }
+
+    .logo-circle {
+      width: 48px;
+      height: 48px;
+      background: var(--greige);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .logo-den {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+
+    .logo-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--lilla);
+      border-radius: 50%;
+      margin: 1px auto;
+    }
+
+    .logo-design {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.45rem;
+      color: var(--white);
+      letter-spacing: 0.15em;
+      text-transform: lowercase;
+    }
+
+    .logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--text);
+      font-weight: 400;
+      letter-spacing: 0.1em;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--lilla); }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 60vh;
+    }
+
+    .hero-left {
+      background: var(--greige-light);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem;
+    }
+
+    .hero-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--lilla);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-left h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-left p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      line-height: 1.9;
+      max-width: 380px;
+      margin-bottom: 2.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      border: 1px solid var(--greige-dark);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      align-self: flex-start;
+    }
+
+    .btn:hover {
+      background: var(--greige-dark);
+      color: var(--white);
+    }
+
+    .hero-right {
+      background: var(--greige);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-right img {
+      width: 100%;
+      height: 100%;
+	  max-width: 100%;
+      object-fit: cover;
+      opacity: 0.9;
+    }
+
+    .hero-placeholder {
+      text-align: center;
+      color: var(--white);
+    }
+
+    .hero-placeholder span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.2em;
+      opacity: 0.7;
+    }
+
+    /* SEZIONI */
+    .section-title {
+      text-align: center;
+      padding: 4rem 2rem 2rem;
+    }
+
+    .section-title h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title p {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: var(--lilla);
+      margin: 1rem auto;
+    }
+
+    /* GRID COLLEZIONI */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: #ece7e2;
+      margin: 0 4rem 4rem;
+    }
+
+    .grid-item {
+      background: var(--white);
+      padding: 2rem;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.2s;
+    }
+
+    .grid-item:hover { background: var(--greige-light); }
+
+    .grid-item-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .grid-item h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .grid-item p {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* BAND */
+    .band {
+      background: var(--greige-light);
+      padding: 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4rem;
+    }
+
+    .band h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--text);
+    }
+
+    .band p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      max-width: 400px;
+      line-height: 1.8;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--greige);
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--white);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-text {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-lilla {
+      width: 8px;
+      height: 8px;
+      background: var(--lilla);
+      border-radius: 50%;
+      display: inline-block;
+      margin: 0 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="logo-wrap">
+      <div class="logo-circle">
+        <span class="logo-den">DEN</span>
+        <div class="logo-dot"></div>
+        <span class="logo-design">design</span>
+      </div>
+      <span class="logo-text">Handmade Jewels</span>
+    </a>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/collezioni">Collezioni</a></li>
+      <li><a href="/galleria">Galleria</a></li>
+      <li><a href="/chi-sono">Chi sono</a></li>
+      <li><a href="/contatti">Contatti</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-tag">Handmade · Artigianale · Unico</div>
+      <h1>Gioielli<br/>fatti a mano<br/>con cura</h1>
+      <p>Ogni pezzo è unico, creato con materiali selezionati e una cura artigianale che si vede e si sente.</p>
+      <a href="/collezioni" class="btn">Scopri le collezioni</a>
+    </div>
+    <div class="hero-right">
+      <img src="/foto-home/foto-home.jpg" alt="Den Design Jewels" />
+    </div>
+  </section>
+
+  <div class="section-title">
+    <h2>Le collezioni</h2>
+    <div class="divider"></div>
+    <p>Pezzi unici fatti a mano</p>
+  </div>
+
+  <div class="grid">
+    <a href="/collezioni" class="grid-item">
+      <span class="grid-item-icon">○</span>
+      <h3>Collane</h3>
+      <p>Pezzi unici in argento e pietre naturali</p>
+    </a>
+    <a href="/collezioni" class="grid-item">
+      <span class="grid-item-icon">◇</span>
+      <h3>Bracciali</h3>
+      <p>Eleganza artigianale al polso</p>
+    </a>
+    <a href="/collezioni" class="grid-item">
+      <span class="grid-item-icon">△</span>
+      <h3>Orecchini</h3>
+      <p>Forme geometriche e materiali naturali</p>
+    </a>
+  </div>
+
+  <div class="band">
+    <h2>Ogni pezzo<br/>racconta una storia</h2>
+    <p>I gioielli Den Design nascono da una passione per i materiali, le forme e l'artigianato. Nessun pezzo è uguale all'altro.</p>
+    <a href="/chi-sono" class="btn">Scopri di più</a>
+  </div>
+
+  <footer>
+    <div>
+      <div class="footer-logo">Den Design</div>
+      <div class="footer-text">Handmade Jewels</div>
+    </div>
+    <div class="footer-text">
+      <span class="footer-lilla"></span>
+      Fatto con cura · Svizzera
+    </div>
+  </footer>
+
+</body>
+</html>
