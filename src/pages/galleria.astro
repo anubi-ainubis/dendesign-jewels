@@ -1,6 +1,12 @@
 ---
 const images = import.meta.glob('/public/galleria/*', { eager: true });
 const imageList = Object.keys(images).map(path => path.replace('/public', ''));
+
+const cols = 3;
+const columns: string[][] = [[], [], []];
+imageList.forEach((img, i) => {
+  columns[i % cols].push(img);
+});
 ---
 
 <!DOCTYPE html>
@@ -38,16 +44,21 @@ const imageList = Object.keys(images).map(path => path.replace('/public', ''));
     .divider { width: 40px; height: 1px; background: #9b8bb4; margin: 1rem auto; }
 
     .grid {
-      columns: 3;
-      column-gap: 1rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
       max-width: 1200px;
       margin: 2rem auto 4rem;
       padding: 0 2rem;
     }
 
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
     .grid-item {
-      break-inside: avoid;
-      margin-bottom: 1rem;
       overflow: hidden;
       border-radius: 2px;
       cursor: pointer;
@@ -64,7 +75,6 @@ const imageList = Object.keys(images).map(path => path.replace('/public', ''));
       opacity: 0.9;
     }
 
-    /* LIGHTBOX */
     .lightbox {
       display: none;
       position: fixed;
@@ -117,9 +127,13 @@ const imageList = Object.keys(images).map(path => path.replace('/public', ''));
   </div>
 
   <div class="grid">
-    {imageList.map(src => (
-      <div class="grid-item" onclick={`openLightbox('${src}')`}>
-        <img src={src} alt="Den Design Jewels" loading="lazy" />
+    {columns.map((col) => (
+      <div class="col">
+        {col.map(src => (
+          <div class="grid-item" onclick={`openLightbox('${src}')`}>
+            <img src={src} alt="Den Design Jewels" loading="lazy" />
+          </div>
+        ))}
       </div>
     ))}
   </div>
